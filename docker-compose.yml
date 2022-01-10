@@ -2058,3 +2058,20 @@ services:
         - ${TARANTOOL_ADMIN_PORT}:80
       networks:
         - backend
+
+### socketio #####################################################
+    socketio:
+      build:
+        context: ./socketio
+      ports:
+        - "3008:3008"
+      container_name: socketio
+      environment:
+        REDIS_HOST: redis
+        REDIS_PORT: 6379
+        BROADCAST_PORT: 3008
+      networks:
+          - backend
+      volumes:
+        - ./socketio:/usr/src/app/socketio
+        - /usr/src/app/socketio/node_modules

@@ -6,7 +6,7 @@ const ioRedis = require('ioredis');
 
 dotenv.config();
 const redis = new ioRedis(process.env.REDIS_PORT, process.env.REDIS_HOST);
-redis.subscribe('test-channel', (err, count) => {
+redis.psubscribe('*', (err, count) => {
   if (err) {
     console.error("Failed to subscribe: %s", err.message);
   } else {
@@ -15,7 +15,7 @@ redis.subscribe('test-channel', (err, count) => {
     );
   }
 });
-redis.on('message', (channel, message) => {
+redis.on('pmessage', (pattern, channel, message) => {
   console.log(`Message Received: ${message}`);
   const { event, data } = JSON.parse(message);
   io.emit(`${channel}:${event}`, data);

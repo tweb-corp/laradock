@@ -16,8 +16,9 @@ redis.psubscribe('*', (err, count) => {
   }
 });
 redis.on('pmessage', (pattern, channel, message) => {
-  console.log(`Message Received: ${message}`);
-  const { event, data } = JSON.parse(message);
+  console.log(`Message received in channel ${channel}: ${message}`);
+  const { event: rawEvent, data } = JSON.parse(message);
+  const event = rawEvent.split(/[\\]+/).pop();
   io.emit(`${channel}:${event}`, data);
 });
 httpServer.listen(process.env.BROADCAST_PORT, () => {

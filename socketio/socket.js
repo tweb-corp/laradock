@@ -5,7 +5,11 @@ const dotenv = require('dotenv');
 const ioRedis = require('ioredis');
 
 dotenv.config();
-const redis = new ioRedis(process.env.REDIS_PORT, process.env.REDIS_HOST);
+const redis = new ioRedis({
+  port: process.env.REDIS_PORT,
+  host: process.env.REDIS_HOST,
+  password: process.env.REDIS_PASSWORD,
+});
 redis.psubscribe('*', (err, count) => {
   if (err) {
     console.error("Failed to subscribe: %s", err.message);

@@ -2069,6 +2069,7 @@ services:
       environment:
         REDIS_HOST: redis
         REDIS_PORT: 6379
+        REDIS_PASSWORD: ${REDIS_PASSWORD}
         BROADCAST_PORT: 3008
       networks:
           - backend

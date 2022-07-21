@@ -2071,8 +2071,11 @@ services:
         REDIS_PORT: 6379
         REDIS_PASSWORD: ${REDIS_PASSWORD}
         BROADCAST_PORT: 3008
+        SSL_KEY_PATH: ${SSL_KEY_PATH}
+        SSL_CERT_PATH: ${SSL_CERT_PATH}
       networks:
           - backend
       volumes:
         - ./socketio:/usr/src/app/socketio
+        - ./data/certbot/certs/:/var/certs
         - /usr/src/app/socketio/node_modules
